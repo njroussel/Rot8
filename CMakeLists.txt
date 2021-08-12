@@ -33,6 +33,10 @@ add_executable(rot8
 target_include_directories(rot8 SYSTEM PRIVATE
     # Rot8 include files
     ${CMAKE_CURRENT_SOURCE_DIR}/include
+    # GLFW OpenGL/Vulkan graphcis library framework
+    ${GLFW_INCLUDE_DIR}
+    # GLAD OpenGL function loader
+    ${GLAD_INCLUDE_DIR}
     # Kr8md Vectorization (SIMD) library
     ${KR8MD_INCLUDE_DIR}
     )
