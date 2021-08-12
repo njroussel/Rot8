@@ -26,7 +26,10 @@ add_subdirectory(ext)
 
 add_executable(rot8
     # Header files
+    include/rot8/window.h
+
     # Source files
+    src/window.cpp
     src/main.cpp
     )
 
