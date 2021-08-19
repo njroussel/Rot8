@@ -1,4 +1,4 @@
-const char triangleVShader[] = R"glsl(
+const GLchar* triangleVShader = R"glsl(
 #version 330 core
 layout (location = 0) in vec3 aPos;
 
@@ -8,7 +8,7 @@ void main()
 }
 )glsl";
 
-const char triangleFShader[] = R"glsl(
+const GLchar* triangleFShader = R"glsl(
 #version 330 core
 layout (location = 0) in vec3 aPos;
 

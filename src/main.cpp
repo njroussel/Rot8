@@ -1,6 +1,7 @@
 #define GLFW_INCLUDE_NONE
 
 #include <rot8/window.h>
+#include <rot8/triangle.h>
 
 #include <iostream>
 
@@ -20,6 +21,12 @@ int main() {
   glGenBuffers(1, &vertexBufferId);
   glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+
+  uint32_t vShader = glCreateShader(GL_VERTEX_SHADER);
+  glShaderSource(vShader, 1, &triangleVShader, nullptr);
+  glCompileShader(vShader);
+
 
   std::cout << "Exiting..." << std::endl;
   return EXIT_SUCCESS;
