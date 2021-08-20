@@ -7,8 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run clang-format
-        uses: docker://alpine:3.8
         run: >
-          find src/ include |
+          find src/ include/ |
           grep -E ".*(\.cpp|\.h)$$" |
           xargs clang-format --Werror -n

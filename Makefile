@@ -7,7 +7,7 @@ help:
 	@echo "all - format > cleanbuild"
 
 format:
-	find src/ include | \
+	find src/ include/ | \
 	grep -E ".*(\.cpp|\.h)$$" | \
 	xargs clang-format -i
 
