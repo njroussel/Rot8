@@ -1,22 +1,22 @@
-.PHONY: help format cleanbuild build all
+.PHONY: help format clean build all
 
 help:
 	@echo "format - format code with clang-format"
-	@echo "cleanbuild - clean build executable"
+	@echo "clean - clean build folder"
 	@echo "build - build executable"
 	@echo "all - format > cleanbuild"
 
 format:
-	clang-format -i include/**/*.h src/**/*.cpp
+	find src/ include | \
+	grep -E ".*(\.cpp|\.h)$$" | \
+	xargs clang-format -i
 
 build:
 	mkdir -p build
 	cmake -B build -GNinja . && ninja -C build
 
-cleanbuild:
+clean:
 	rm -rf build
-	mkdir build
-	cmake -B build -GNinja . && ninja -C build
 
-all: 
-	format cleanbuild
+all:
+	format clean build
