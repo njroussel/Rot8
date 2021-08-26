@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release)
+  set(CMAKE_BUILD_TYPE Debug)
 endif()
 
 message("Build type: ${CMAKE_BUILD_TYPE}")
@@ -26,12 +26,16 @@ add_subdirectory(ext)
 
 add_executable(rot8
     # Header files
-    include/rot8/window.h
+    include/rot8/drawable.h
     include/rot8/helpers/shader.h
+    include/rot8/helpers/vao.h
+    include/rot8/window.h
 
     # Source files
-    src/window.cpp
+    src/drawable.cpp
     src/helpers/shader.cpp
+    src/helpers/vao.cpp
+    src/window.cpp
     src/main.cpp
     )
 

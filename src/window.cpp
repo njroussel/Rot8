@@ -1,5 +1,6 @@
 #include <rot8/window.h>
 
+#include <algorithm>
 #include <iostream>
 
 Window::Window(const uint16_t width, const uint16_t height)
@@ -38,33 +39,34 @@ Window::Window(const uint16_t width, const uint16_t height)
   glfwSetWindowCloseCallback(m_window, destroyWindowOnClose);
   gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
   glfwSwapInterval(1);  // V-sync
-}
-
-void Window::destroyWindowOnClose(GLFWwindow *window) {
-  glfwDestroyWindow(window);
+  glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 }
 
 Window::~Window() { glfwTerminate(); }
 
-bool Window::wasCreated() { return m_successInit; }
+bool Window::wasCreated() const { return m_successInit; }
 
-void Window::render() {
+void Window::render(std::vector<Drawable> &drawables) const {
   processInput(m_window);
 
-  glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
-  glDrawArrays(GL_TRIANGLES, 0, 3);
+  std::for_each(drawables.begin(), drawables.end(),
+                [&](const Drawable &drawable) { drawable.draw(); });
 
   glfwSwapBuffers(m_window);
   glfwPollEvents();
 }
 
-bool Window::isActive() { return !glfwWindowShouldClose(m_window); }
+bool Window::isActive() const { return !glfwWindowShouldClose(m_window); }
 
-void Window::renderWhileActive() {
+void Window::renderWhileActive(std::vector<Drawable> &drawables) const {
   while (isActive()) {
-    render();
+    render(drawables);
   }
+}
+
+void Window::destroyWindowOnClose(GLFWwindow *window) {
+  glfwDestroyWindow(window);
 }
 
 void Window::processInput(GLFWwindow *const window) {

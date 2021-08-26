@@ -41,11 +41,10 @@ GLuint checkCompilation(GLuint shader) {
   glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
   if (!success) {
     GLint infoLogLength;
-    ;
     glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength);
 
     std::string infoLog;
-    infoLog.resize(static_cast<std::string::size_type>(infoLogLength));
+    infoLog.resize(static_cast<size_t>(infoLogLength));
     glGetShaderInfoLog(shader, infoLogLength, NULL, &infoLog[0]);
 
     std::cerr << "ERROR::SHADER:::COMPILATION_FAILED\n"

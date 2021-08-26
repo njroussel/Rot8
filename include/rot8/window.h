@@ -4,6 +4,9 @@
 
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
+#include <rot8/drawable.h>
+
+#include <vector>
 
 class Window {
  public:
@@ -11,13 +14,13 @@ class Window {
 
   ~Window();
 
-  bool wasCreated();
+  bool wasCreated() const;
 
-  void render();
+  void render(std::vector<Drawable> &drawables) const;
 
-  bool isActive();
+  bool isActive() const;
 
-  void renderWhileActive();
+  void renderWhileActive(std::vector<Drawable> &drawables) const;
 
  private:
   static void destroyWindowOnClose(GLFWwindow *const window);

@@ -13,6 +13,10 @@ format:
 
 build:
 	mkdir -p build
+	cmake -B build -DCMAKE_BUILD_TYPE=Release -GNinja . && ninja -C build
+
+debug:
+	mkdir -p build
 	cmake -B build -GNinja . && ninja -C build
 
 clean:
