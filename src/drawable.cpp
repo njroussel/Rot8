@@ -86,20 +86,4 @@ void Drawable::draw() const {
   glUseProgram(m_program);
   glBindVertexArray(m_vao);
   glDrawArrays(GL_TRIANGLES, 0, 3);
-
-  /*
-  GLint infoLogLength;
-  glGetProgramiv(m_program, GL_INFO_LOG_LENGTH, &infoLogLength);
-  std::string infoLog;
-  infoLog.resize(infoLogLength);
-  glGetProgramInfoLog(m_program, infoLogLength, NULL, &infoLog[0]);
-  std::cout << "Program information log:\n"
-            << infoLog << std::endl;
-
-  glGetShaderiv(m_fShader, GL_INFO_LOG_LENGTH, &infoLogLength);
-  infoLog.resize(static_cast<std::string::size_type>(infoLogLength));
-  glGetShaderInfoLog(m_fShader, infoLogLength, NULL, &infoLog[0]);
-  std::cerr << "Shader information log:\n"
-            << infoLog << std::endl;
-  */
 }
