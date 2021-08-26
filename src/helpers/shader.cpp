@@ -4,15 +4,13 @@
 #include <fstream>
 #include <iostream>
 
-GLuint compileShader(GLenum shaderType,
-                     const std::filesystem::path& shaderPath) {
-  const GLuint SHADER_ERROR = 0;
-
+Shader::Shader(const GLenum shaderType,
+               const std::filesystem::path& shaderPath) {
   if (!std::filesystem::exists(shaderPath)) {
     std::cerr << "ERROR::SHADER:::PATH_DOES_NOT_EXIST\n"
               << "Following path for shader could not be found:\n"
               << shaderPath << std::endl;
-    return SHADER_ERROR;
+    return;
   }
 
   std::ifstream shaderStream{shaderPath};
@@ -20,38 +18,55 @@ GLuint compileShader(GLenum shaderType,
     std::cerr << "ERROR::SHADER:::PATH_COULD_NOT_OPEN\n"
               << "Following path for shader could not be opened:\n"
               << shaderPath << std::endl;
-    return SHADER_ERROR;
   }
   std::string shaderSource{std::istreambuf_iterator<char>{shaderStream},
                            std::istreambuf_iterator<char>{}};
 
-  return compileShader(shaderType, &shaderSource[0]);
+  fromSource(shaderType, &shaderSource[0]);
+  checkCompilation();
 }
 
-GLuint compileShader(GLenum shaderType, const GLchar* shaderSource) {
-  GLuint shader = glCreateShader(shaderType);
-  glShaderSource(shader, 1, &shaderSource, nullptr);
-  glCompileShader(shader);
-
-  return checkCompilation(shader);
+Shader::Shader(const GLenum shaderType, const GLchar* shaderSource) {
+  fromSource(shaderType, shaderSource);
+  checkCompilation();
 }
 
-GLuint checkCompilation(GLuint shader) {
+Shader::~Shader() { glDeleteShader(m_shader); }
+
+Shader::Shader(Shader&& rhs) noexcept : m_shader{rhs.m_shader} {
+  rhs.m_shader = 0;
+}
+
+Shader& Shader::operator=(Shader&& rhs) noexcept {
+  if (this != &rhs) {
+    m_shader = rhs.m_shader;
+
+    rhs.m_shader = 0;
+  }
+
+  return *this;
+}
+
+void Shader::fromSource(const GLenum shaderType, const GLchar* shaderSource) {
+  m_shader = glCreateShader(shaderType);
+  glShaderSource(m_shader, 1, &shaderSource, nullptr);
+  glCompileShader(m_shader);
+}
+
+void Shader::checkCompilation() {
   GLint success;
-  glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+  glGetShaderiv(m_shader, GL_COMPILE_STATUS, &success);
   if (!success) {
     GLint infoLogLength;
-    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength);
+    glGetShaderiv(m_shader, GL_INFO_LOG_LENGTH, &infoLogLength);
 
     std::string infoLog;
     infoLog.resize(static_cast<size_t>(infoLogLength));
-    glGetShaderInfoLog(shader, infoLogLength, NULL, &infoLog[0]);
+    glGetShaderInfoLog(m_shader, infoLogLength, NULL, &infoLog[0]);
 
     std::cerr << "ERROR::SHADER:::COMPILATION_FAILED\n"
               << "Information log:\n"
               << infoLog << std::endl;
-    return 0;
+    m_shader = 0;
   }
-
-  return shader;
 }

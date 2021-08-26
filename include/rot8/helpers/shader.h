@@ -4,9 +4,30 @@
 
 #include <filesystem>
 
-GLuint compileShader(GLenum shaderType,
-                     const std::filesystem::path& shaderPath);
+class Shader {
+ public:
+  Shader(GLenum shaderType, const std::filesystem::path& shaderPath);
 
-GLuint compileShader(GLenum shaderType, const GLchar* shaderSource);
+  Shader(GLenum shaderType, const GLchar* shaderSource);
 
-GLuint checkCompilation(GLuint shader);
+  ~Shader();
+
+  Shader(Shader const& rhs) = delete;
+
+  Shader& operator=(Shader const& rhs) = delete;
+
+  Shader(Shader&& rhs) noexcept;
+
+  Shader& operator=(Shader&& rhs) noexcept;
+
+  inline bool isValid() const { return m_shader != 0; }
+
+  inline GLuint getId() const { return m_shader; }
+
+ private:
+  void fromSource(const GLenum shaderType, const GLchar* shaderSource);
+
+  void checkCompilation();
+
+  GLuint m_shader{0};
+};
