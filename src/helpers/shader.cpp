@@ -1,14 +1,35 @@
 #include <rot8/helpers/shader.h>
 
+#include <filesystem>
+#include <fstream>
 #include <iostream>
 
-GLuint compileShader(GLenum shadertype,
+GLuint compileShader(GLenum shaderType,
                      const std::filesystem::path& shaderPath) {
-  return 0;
+  const GLuint SHADER_ERROR = 0;
+
+  if (!std::filesystem::exists(shaderPath)) {
+    std::cerr << "ERROR::SHADER:::PATH_DOES_NOT_EXIST\n"
+              << "Following path for shader could not be found:\n"
+              << shaderPath << std::endl;
+    return SHADER_ERROR;
+  }
+
+  std::ifstream shaderStream{shaderPath};
+  if (!shaderStream.is_open()) {
+    std::cerr << "ERROR::SHADER:::PATH_COULD_NOT_OPEN\n"
+              << "Following path for shader could not be opened:\n"
+              << shaderPath << std::endl;
+    return SHADER_ERROR;
+  }
+  std::string shaderSource{std::istreambuf_iterator<char>{shaderStream},
+                           std::istreambuf_iterator<char>{}};
+
+  return compileShader(shaderType, &shaderSource[0]);
 }
 
-GLuint compileShader(GLenum shadertype, const GLchar* shaderSource) {
-  GLuint shader = glCreateShader(shadertype);
+GLuint compileShader(GLenum shaderType, const GLchar* shaderSource) {
+  GLuint shader = glCreateShader(shaderType);
   glShaderSource(shader, 1, &shaderSource, nullptr);
   glCompileShader(shader);
 

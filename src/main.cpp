@@ -1,5 +1,4 @@
 #include <rot8/helpers/shader.h>
-#include <rot8/triangle.h>
 #include <rot8/window.h>
 
 #include <iostream>
@@ -27,8 +26,10 @@ int main() {
   glEnableVertexAttribArray(0);
 
   // Shaders
-  GLuint vShader = compileShader(GL_VERTEX_SHADER, triangleVShader);
-  GLuint fShader = compileShader(GL_FRAGMENT_SHADER, triangleFShader);
+  std::filesystem::path vShaderPath("./src/triangle/triangle.vert");
+  std::filesystem::path fShaderPath("./src/triangle/triangle.frag");
+  GLuint vShader = compileShader(GL_VERTEX_SHADER, vShaderPath);
+  GLuint fShader = compileShader(GL_FRAGMENT_SHADER, fShaderPath);
 
   GLuint program = glCreateProgram();
   if (program == 0) {

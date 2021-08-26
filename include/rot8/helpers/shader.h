@@ -4,9 +4,9 @@
 
 #include <filesystem>
 
-GLuint compileShader(GLenum shadertype,
+GLuint compileShader(GLenum shaderType,
                      const std::filesystem::path& shaderPath);
 
-GLuint compileShader(GLenum shadertype, const GLchar* shaderSource);
+GLuint compileShader(GLenum shaderType, const GLchar* shaderSource);
 
 GLuint checkCompilation(GLuint shader);
