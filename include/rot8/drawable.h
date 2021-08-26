@@ -24,8 +24,6 @@ class Drawable {
   void draw() const;
 
  private:
-  GLuint m_vShader{0};
-  GLuint m_fShader{0};
   GLuint m_program{0};
   GLuint m_vao;
 };

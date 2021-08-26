@@ -7,9 +7,9 @@
 Drawable::Drawable(std::filesystem::path vShaderPath,
                    std::filesystem::path fShaderPath, GLuint vao)
     : m_vao{vao} {
-  m_vShader = compileShader(GL_VERTEX_SHADER, vShaderPath);
-  m_fShader = compileShader(GL_FRAGMENT_SHADER, fShaderPath);
-  if (m_vShader == 0 || m_fShader == 0) {
+  GLuint vShader = compileShader(GL_VERTEX_SHADER, vShaderPath);
+  GLuint fShader = compileShader(GL_FRAGMENT_SHADER, fShaderPath);
+  if (vShader == 0 || fShader == 0) {
     return;
   }
 
@@ -20,8 +20,8 @@ Drawable::Drawable(std::filesystem::path vShaderPath,
     return;
   }
 
-  glAttachShader(m_program, m_vShader);
-  glAttachShader(m_program, m_fShader);
+  glAttachShader(m_program, vShader);
+  glAttachShader(m_program, fShader);
   glLinkProgram(m_program);
 
   GLint success;
@@ -40,8 +40,8 @@ Drawable::Drawable(std::filesystem::path vShaderPath,
     return;
   }
 
-  glDeleteShader(m_vShader);
-  glDeleteShader(m_fShader);
+  glDeleteShader(vShader);
+  glDeleteShader(fShader);
 }
 
 Drawable::~Drawable() {
@@ -51,24 +51,16 @@ Drawable::~Drawable() {
 }
 
 Drawable::Drawable(Drawable&& rhs) noexcept
-    : m_vShader{std::move(rhs.m_vShader)},
-      m_fShader{std::move(rhs.m_fShader)},
-      m_program{std::move(rhs.m_program)},
+    : m_program{std::move(rhs.m_program)},
       m_vao{std::move(rhs.m_vao)} {
-  rhs.m_vShader = 0;
-  rhs.m_fShader = 0;
   rhs.m_program = 0;
   rhs.m_vao = 0;
 }
 
 Drawable& Drawable::operator=(Drawable&& rhs) noexcept {
-  m_vShader = std::move(rhs.m_vShader);
-  m_fShader = std::move(rhs.m_fShader);
   m_program = std::move(rhs.m_program);
   m_vao = std::move(rhs.m_vao);
 
-  rhs.m_vShader = 0;
-  rhs.m_fShader = 0;
   rhs.m_program = 0;
   rhs.m_vao = 0;
 
@@ -79,7 +71,7 @@ bool Drawable::isReady() {
   GLint linkSuccess;
   glGetProgramiv(m_program, GL_LINK_STATUS, &linkSuccess);
 
-  return m_vShader != 0 && m_fShader != 0 && m_program != 0 && linkSuccess != 0;
+  return m_program != 0 && linkSuccess != 0;
 }
 
 void Drawable::draw() const {
