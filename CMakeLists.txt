@@ -27,9 +27,11 @@ add_subdirectory(ext)
 add_executable(rot8
     # Header files
     include/rot8/window.h
+    include/rot8/helpers/shader.h
 
     # Source files
     src/window.cpp
+    src/helpers/shader.cpp
     src/main.cpp
     )
 

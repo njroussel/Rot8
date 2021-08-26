@@ -1,28 +1,8 @@
-#define GLFW_INCLUDE_NONE
-
+#include <rot8/helpers/shader.h>
 #include <rot8/triangle.h>
 #include <rot8/window.h>
 
 #include <iostream>
-
-GLuint compileShader(GLenum shadertype, const GLchar* shaderSource) {
-  GLuint shader = glCreateShader(shadertype);
-  glShaderSource(shader, 1, &shaderSource, nullptr);
-  glCompileShader(shader);
-
-  GLint success;
-  glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-  if (!success) {
-    char infoLog[512];
-    glGetShaderInfoLog(shader, 512, NULL, infoLog);
-    std::cerr << "ERROR::SHADER:::COMPILATION_FAILED\n"
-              << "Information log:\n"
-              << infoLog << std::endl;
-    return 0;
-  }
-
-  return shader;
-}
 
 int main() {
   Window window(1280u, 720u);
