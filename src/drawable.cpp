@@ -1,7 +1,10 @@
-#include <glad/glad.h>
+#define GLFW_INCLUDE_NONE
+
+#include <GLFW/glfw3.h>
 #include <rot8/drawable.h>
 #include <rot8/helpers/shader.h>
 
+#include <cmath>
 #include <iostream>
 
 Drawable::Drawable(std::filesystem::path vShaderPath,
@@ -71,7 +74,12 @@ bool Drawable::isReady() {
 }
 
 void Drawable::draw() const {
+  float timeValue = static_cast<float>(glfwGetTime());
+  float greenValue = (std::sin(timeValue) / 2.0f) + 0.5f;
+
   glUseProgram(m_program);
+  glUniform4f(0, 0.0f, greenValue, 0.0f, 1.0f);
+
   glBindVertexArray(m_vao);
   glDrawArrays(GL_TRIANGLES, 0, 3);
 }
