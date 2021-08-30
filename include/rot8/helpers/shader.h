@@ -24,6 +24,8 @@ class Shader {
 
   inline GLuint getId() const { return m_shader; }
 
+  static void setVec4f();
+
  private:
   void fromSource(const GLenum shaderType, const GLchar* shaderSource);
 
