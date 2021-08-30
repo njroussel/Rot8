@@ -31,8 +31,10 @@ int main() {
 
   while (window.isActive()) {
     window.prerender();
-    std::for_each(triangles.begin(), triangles.end(),
-                  [&](const Triangle& triangle) { triangle.render(); });
+    std::for_each(triangles.begin(), triangles.end(), [&](Triangle& triangle) {
+      triangle.update();
+      triangle.render();
+    });
     window.postrender();
   }
 

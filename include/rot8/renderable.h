@@ -24,11 +24,6 @@ class Renderable {
 
   void render(const std::function<void()>& renderSetup) const;
 
-  inline static void setVec4f(GLuint location, GLfloat x, GLfloat y, GLfloat z,
-                              GLfloat w) {
-    glUniform4f(location, x, y, z, w);
-  }
-
  private:
   GLuint m_program{0};
 };

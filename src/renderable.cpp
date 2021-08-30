@@ -1,6 +1,3 @@
-#define GLFW_INCLUDE_NONE
-
-#include <GLFW/glfw3.h>
 #include <rot8/helpers/shader.h>
 #include <rot8/renderable.h>
 
@@ -8,13 +5,11 @@
 
 Renderable::Renderable(std::filesystem::path& vShaderPath,
                        std::filesystem::path& fShaderPath) {
-  std::cout << "INSIDE" << std::endl;
   Shader vShader{GL_VERTEX_SHADER, vShaderPath};
   Shader fShader{GL_FRAGMENT_SHADER, fShaderPath};
   if (!vShader.isValid() || !fShader.isValid()) {
     return;
   }
-  std::cout << "compiled" << std::endl;
 
   m_program = glCreateProgram();
   if (m_program == 0) {
@@ -26,7 +21,6 @@ Renderable::Renderable(std::filesystem::path& vShaderPath,
   glAttachShader(m_program, vShader.getId());
   glAttachShader(m_program, fShader.getId());
   glLinkProgram(m_program);
-  std::cout << "linked" << std::endl;
 
   GLint success;
   glGetProgramiv(m_program, GL_LINK_STATUS, &success);
@@ -43,8 +37,6 @@ Renderable::Renderable(std::filesystem::path& vShaderPath,
               << infoLog << std::endl;
     return;
   }
-
-  std::cout << "Done" << std::endl;
 }
 
 Renderable::~Renderable() {

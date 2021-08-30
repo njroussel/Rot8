@@ -1,3 +1,4 @@
+#include <glad/glad.h>
 #include <rot8/helpers/shader.h>
 
 #include <filesystem>
