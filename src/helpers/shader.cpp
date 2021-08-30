@@ -47,8 +47,6 @@ Shader& Shader::operator=(Shader&& rhs) noexcept {
   return *this;
 }
 
-void Shader::setVec4f(location, ) { glUniform4f(0, 0.0f, greenValue, 0.0f, 1.0f); }
-
 void Shader::fromSource(const GLenum shaderType, const GLchar* shaderSource) {
   m_shader = glCreateShader(shaderType);
   glShaderSource(m_shader, 1, &shaderSource, nullptr);

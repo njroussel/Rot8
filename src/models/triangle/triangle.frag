@@ -6,4 +6,4 @@ out vec4 FragColor;
 
 layout(location = 0) uniform vec4 tmpColor;
 
-void main() { FragColor = vertexColor; }
+void main() { FragColor = tmpColor; }

@@ -46,24 +46,17 @@ Window::~Window() { glfwTerminate(); }
 
 bool Window::wasCreated() const { return m_successInit; }
 
-void Window::render(std::vector<Drawable> &drawables) const {
+void Window::prerender() const {
   processInput(m_window);
-
   glClear(GL_COLOR_BUFFER_BIT);
-  std::for_each(drawables.begin(), drawables.end(),
-                [&](const Drawable &drawable) { drawable.draw(); });
+}
 
+void Window::postrender() const {
   glfwSwapBuffers(m_window);
   glfwPollEvents();
 }
 
 bool Window::isActive() const { return !glfwWindowShouldClose(m_window); }
-
-void Window::renderWhileActive(std::vector<Drawable> &drawables) const {
-  while (isActive()) {
-    render(drawables);
-  }
-}
 
 void Window::destroyWindowOnClose(GLFWwindow *window) {
   glfwDestroyWindow(window);

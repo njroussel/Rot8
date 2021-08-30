@@ -24,7 +24,10 @@ class Shader {
 
   inline GLuint getId() const { return m_shader; }
 
-  static void setVec4f();
+  inline static void setVec4f(GLuint location, GLfloat x, GLfloat y, GLfloat z,
+                              GLfloat w) {
+    glUniform4f(location, x, y, z, w);
+  }
 
  private:
   void fromSource(const GLenum shaderType, const GLchar* shaderSource);

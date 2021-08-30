@@ -1,6 +1,6 @@
 #include <rot8/helpers/vao.h>
 
-GLuint createVAO(GLfloat* vertices, GLsizei verticeCount) {
+GLuint createVAO(const GLfloat* vertices, GLsizei verticeCount) {
   GLuint vao;
   glGenVertexArrays(1, &vao);
   glBindVertexArray(vao);

@@ -1,20 +1,20 @@
 #define GLFW_INCLUDE_NONE
 
 #include <GLFW/glfw3.h>
-#include <rot8/drawable.h>
 #include <rot8/helpers/shader.h>
+#include <rot8/renderable.h>
 
-#include <cmath>
 #include <iostream>
 
-Drawable::Drawable(std::filesystem::path vShaderPath,
-                   std::filesystem::path fShaderPath, GLuint vao)
-    : m_vao{vao} {
+Renderable::Renderable(std::filesystem::path& vShaderPath,
+                       std::filesystem::path& fShaderPath) {
+  std::cout << "INSIDE" << std::endl;
   Shader vShader{GL_VERTEX_SHADER, vShaderPath};
   Shader fShader{GL_FRAGMENT_SHADER, fShaderPath};
   if (!vShader.isValid() || !fShader.isValid()) {
     return;
   }
+  std::cout << "compiled" << std::endl;
 
   m_program = glCreateProgram();
   if (m_program == 0) {
@@ -26,6 +26,7 @@ Drawable::Drawable(std::filesystem::path vShaderPath,
   glAttachShader(m_program, vShader.getId());
   glAttachShader(m_program, fShader.getId());
   glLinkProgram(m_program);
+  std::cout << "linked" << std::endl;
 
   GLint success;
   glGetProgramiv(m_program, GL_LINK_STATUS, &success);
@@ -42,44 +43,37 @@ Drawable::Drawable(std::filesystem::path vShaderPath,
               << infoLog << std::endl;
     return;
   }
+
+  std::cout << "Done" << std::endl;
 }
 
-Drawable::~Drawable() {
+Renderable::~Renderable() {
   if (m_program != 0) {
     glDeleteProgram(m_program);
   }
 }
 
-Drawable::Drawable(Drawable&& rhs) noexcept
-    : m_program{std::move(rhs.m_program)}, m_vao{std::move(rhs.m_vao)} {
+Renderable::Renderable(Renderable&& rhs) noexcept
+    : m_program{std::move(rhs.m_program)} {
   rhs.m_program = 0;
-  rhs.m_vao = 0;
 }
 
-Drawable& Drawable::operator=(Drawable&& rhs) noexcept {
+Renderable& Renderable::operator=(Renderable&& rhs) noexcept {
   m_program = std::move(rhs.m_program);
-  m_vao = std::move(rhs.m_vao);
-
   rhs.m_program = 0;
-  rhs.m_vao = 0;
 
   return *this;
 }
 
-bool Drawable::isReady() {
+bool Renderable::isReady() const {
   GLint linkSuccess;
   glGetProgramiv(m_program, GL_LINK_STATUS, &linkSuccess);
 
   return m_program != 0 && linkSuccess != 0;
 }
 
-void Drawable::draw() const {
-  float timeValue = static_cast<float>(glfwGetTime());
-  float greenValue = (std::sin(timeValue) / 2.0f) + 0.5f;
-
+void Renderable::render(const std::function<void()>& renderSetup) const {
   glUseProgram(m_program);
-  glUniform4f(0, 0.0f, greenValue, 0.0f, 1.0f);
-
-  glBindVertexArray(m_vao);
+  renderSetup();
   glDrawArrays(GL_TRIANGLES, 0, 3);
 }

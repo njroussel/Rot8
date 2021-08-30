@@ -1,8 +1,9 @@
-#include <rot8/drawable.h>
 #include <rot8/helpers/shader.h>
-#include <rot8/helpers/vao.h>
+#include <rot8/models/triangle.h>
+#include <rot8/renderable.h>
 #include <rot8/window.h>
 
+#include <algorithm>
 #include <iostream>
 
 int main() {
@@ -11,29 +12,29 @@ int main() {
     return EXIT_FAILURE;
   }
 
-  GLfloat vertices_1[9] = {-0.8f, 0.7f,  0.0f,  //
-                           -0.8f, -0.8f, 0.0f,  //
-                           0.7f,  -0.8f, 0.0f};
-  GLfloat vertices_2[9] = {-0.7f, 0.8f,  0.0f,  //
-                           0.8f,  -0.7f, 0.0f,  //
-                           0.8f,  0.8f,  0.0f};
+  float vertices_1[9] = {-0.8f, 0.7f,  0.0f,  //
+                         -0.8f, -0.8f, 0.0f,  //
+                         0.7f,  -0.8f, 0.0f};
+  float vertices_2[9] = {-0.7f, 0.8f,  0.0f,  //
+                         0.8f,  -0.7f, 0.0f,  //
+                         0.8f,  0.8f,  0.0f};
 
-  GLuint vao_1 = createVAO(vertices_1, 9);
-  GLuint vao_2 = createVAO(vertices_2, 9);
-
-  Drawable triangle1{"./src/triangle/triangle.vert",
-                     "./src/triangle/triangle.frag", vao_1};
-  Drawable triangle2{"./src/triangle/triangle.vert",
-                     "./src/triangle/triangle.frag", vao_2};
+  Triangle triangle1{Triangle::initGeometry(vertices_1)};
+  Triangle triangle2{Triangle::initGeometry(vertices_2)};
   if (!triangle1.isReady() || !triangle2.isReady()) {
     return EXIT_FAILURE;
   }
 
-  std::vector<Drawable> drawables;
-  drawables.push_back(std::move(triangle1));
-  drawables.push_back(std::move(triangle2));
+  std::vector<Triangle> triangles;
+  triangles.push_back(std::move(triangle1));
+  triangles.push_back(std::move(triangle2));
 
-  window.renderWhileActive(drawables);
+  while (window.isActive()) {
+    window.prerender();
+    std::for_each(triangles.begin(), triangles.end(),
+                  [&](const Triangle& triangle) { triangle.render(); });
+    window.postrender();
+  }
 
   std::cout << "Exiting..." << std::endl;
   return EXIT_SUCCESS;
