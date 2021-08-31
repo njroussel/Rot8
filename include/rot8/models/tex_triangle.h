@@ -9,17 +9,17 @@ class TexTriangle {
  public:
   TexTriangle(GLuint triangleGeometry);
 
-  inline bool isReady() const { return getRenderable().isReady(); }
-
   void update();
 
   void render() const;
 
   static GLuint initGeometry(const float* vertices);
 
-  const Renderable& getRenderable() const;
+  static bool isReady();
+
+  static const Renderable& getRenderable();
 
  private:
-  float m_greenValue{1.f};
+  float m_greenValue{1.0F};
   GLuint m_vao;
 };

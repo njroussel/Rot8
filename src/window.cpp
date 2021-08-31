@@ -3,9 +3,13 @@
 #include <algorithm>
 #include <iostream>
 
+constexpr float CLEAR_COLOR_R = 0.2F;
+constexpr float CLEAR_COLOR_G = 0.3F;
+constexpr float CLEAR_COLOR_B = 0.3F;
+
 Window::Window(const uint16_t width, const uint16_t height)
     : m_width(width), m_height(height), m_successInit(true), m_window(nullptr) {
-  if (!glfwInit()) {
+  if (glfwInit() == GLFW_FALSE) {
     std::cerr << "GLFW could not init!" << std::endl;
     m_successInit = false;
     return;
@@ -22,7 +26,7 @@ Window::Window(const uint16_t width, const uint16_t height)
 
   // Create GLFW window
   m_window = glfwCreateWindow(m_width, m_height, "Rot8", NULL, NULL);
-  if (!m_window) {
+  if (m_window == nullptr) {
     std::cerr << "GLFW could not create a window!" << std::endl;
     m_successInit = false;
     return;
@@ -30,16 +34,17 @@ Window::Window(const uint16_t width, const uint16_t height)
   glfwMakeContextCurrent(m_window);
 
   // Setup GLAD
-  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+  if (gladLoadGLLoader(
+          reinterpret_cast<GLADloadproc>(glfwGetProcAddress)) ==  // NOLINT
+      0) {
     std::cerr << "Failed to initialize GLAD" << std::endl;
     return;
   }
 
   glViewport(0, 0, m_width, m_height);
   glfwSetWindowCloseCallback(m_window, destroyWindowOnClose);
-  gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
   glfwSwapInterval(1);  // V-sync
-  glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+  glClearColor(CLEAR_COLOR_R, CLEAR_COLOR_G, CLEAR_COLOR_B, 1.0F);
 }
 
 Window::~Window() { glfwTerminate(); }
@@ -56,13 +61,16 @@ void Window::postrender() const {
   glfwPollEvents();
 }
 
-bool Window::isActive() const { return !glfwWindowShouldClose(m_window); }
+bool Window::isActive() const {
+  return glfwWindowShouldClose(m_window) == GLFW_FALSE;
+}
 
 void Window::destroyWindowOnClose(GLFWwindow *window) {
   glfwDestroyWindow(window);
 }
 
 void Window::processInput(GLFWwindow *const window) {
-  if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-    glfwSetWindowShouldClose(window, true);
+  if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+    glfwSetWindowShouldClose(window, GLFW_TRUE);
+  }
 }

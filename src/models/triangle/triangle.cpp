@@ -10,13 +10,16 @@
 #include <functional>
 #include <iostream>
 
-const GLuint COLOR_LOCATION{0u};
+const GLuint COLOR_LOCATION{0U};
 
-Triangle::Triangle(GLuint trianglGeometry) : m_vao{trianglGeometry} {}
+Triangle::Triangle(GLuint triangleGeometry) : m_vao{triangleGeometry} {}
 
 void Triangle::update() {
   float timeValue = static_cast<float>(glfwGetTime());
-  m_greenValue = (std::sin(timeValue) / 2.0f) + 0.5f;
+
+  const float downscale = 2.0F;
+  const float offset = 0.5F;
+  m_greenValue = (std::sin(timeValue) / downscale) + offset;
 }
 
 void Triangle::render() const {
@@ -29,10 +32,12 @@ void Triangle::render() const {
 }
 
 GLuint Triangle::initGeometry(const float* vertices) {
-  return createVAO(vertices, 9);
+  return createVAO(vertices, 3 * 3);
 }
 
-const Renderable& Triangle::getRenderable() const {
+bool Triangle::isReady() { return getRenderable().isReady(); }
+
+const Renderable& Triangle::getRenderable() {
   std::filesystem::path vShaderPath("./src/models/triangle/triangle.vert");
   std::filesystem::path fShaderPath("./src/models/triangle/triangle.frag");
 

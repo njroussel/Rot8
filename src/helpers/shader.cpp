@@ -55,10 +55,10 @@ void Shader::fromSource(const GLenum shaderType, const GLchar* shaderSource) {
 }
 
 void Shader::checkCompilation() {
-  GLint success;
+  GLint success{GL_TRUE};
   glGetShaderiv(m_shader, GL_COMPILE_STATUS, &success);
-  if (!success) {
-    GLint infoLogLength;
+  if (success == GL_FALSE) {
+    GLint infoLogLength{0};
     glGetShaderiv(m_shader, GL_INFO_LOG_LENGTH, &infoLogLength);
 
     std::string infoLog;

@@ -22,10 +22,10 @@ Renderable::Renderable(std::filesystem::path& vShaderPath,
   glAttachShader(m_program, fShader.getId());
   glLinkProgram(m_program);
 
-  GLint success;
+  GLint success{GL_TRUE};
   glGetProgramiv(m_program, GL_LINK_STATUS, &success);
-  if (!success) {
-    GLint infoLogLength;
+  if (success == GL_FALSE) {
+    GLint infoLogLength{0};
     glGetProgramiv(m_program, GL_INFO_LOG_LENGTH, &infoLogLength);
 
     std::string infoLog;
@@ -45,20 +45,19 @@ Renderable::~Renderable() {
   }
 }
 
-Renderable::Renderable(Renderable&& rhs) noexcept
-    : m_program{std::move(rhs.m_program)} {
+Renderable::Renderable(Renderable&& rhs) noexcept : m_program{rhs.m_program} {
   rhs.m_program = 0;
 }
 
 Renderable& Renderable::operator=(Renderable&& rhs) noexcept {
-  m_program = std::move(rhs.m_program);
+  m_program = rhs.m_program;
   rhs.m_program = 0;
 
   return *this;
 }
 
 bool Renderable::isReady() const {
-  GLint linkSuccess;
+  GLint linkSuccess{GL_TRUE};
   glGetProgramiv(m_program, GL_LINK_STATUS, &linkSuccess);
 
   return m_program != 0 && linkSuccess != 0;

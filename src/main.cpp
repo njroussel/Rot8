@@ -7,22 +7,26 @@
 #include <algorithm>
 #include <iostream>
 
+constexpr uint16_t WINDOW_WIDTH = 1280U;
+constexpr uint16_t WINDOW_HEIGHT = 720U;
+
 int main() {
-  Window window(1280u, 720u);
+  Window window{WINDOW_WIDTH, WINDOW_HEIGHT};
   if (!window.wasCreated()) {
     return EXIT_FAILURE;
   }
 
-  float vertices_1[9] = {-0.8f, 0.7f,  0.0f,  //
-                         -0.8f, -0.8f, 0.0f,  //
-                         0.7f,  -0.8f, 0.0f};
-  float vertices_2[9] = {-0.7f, 0.8f,  0.0f,  //
-                         0.8f,  -0.7f, 0.0f,  //
-                         0.8f,  0.8f,  0.0f};
+  std::array<float, 3 * 3> vertices_1{-1.0F, 1.0F,  0.0F,  //
+                                      -1.0F, -1.0F, 0.0F,  //
+                                      1.0F,  -1.0F, 0.0F};
 
-  Triangle triangle{Triangle::initGeometry(vertices_1)};
-  TexTriangle textriangle{TexTriangle::initGeometry(vertices_2)};
-  if (!triangle.isReady() || !textriangle.isReady()) {
+  std::array<float, 3 * 3> vertices_2{-1.0F, 1.0F,  0.0F,  //
+                                      1.0F,  1.0F,  0.0F,  //
+                                      1.0F,  -1.0F, 0.0F};
+
+  Triangle triangle{Triangle::initGeometry(&vertices_1[0])};
+  TexTriangle textriangle{TexTriangle::initGeometry(&vertices_2[0])};
+  if (!Triangle::isReady() || !TexTriangle::isReady()) {
     return EXIT_FAILURE;
   }
 

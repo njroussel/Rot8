@@ -11,18 +11,15 @@
 #include <functional>
 #include <iostream>
 
-const GLuint COLOR_LOCATION{0u};
+const GLuint COLOR_LOCATION{0U};
 
-TexTriangle::TexTriangle(GLuint trianglGeometry) : m_vao{trianglGeometry} {}
+TexTriangle::TexTriangle(GLuint triangleGeometry) : m_vao{triangleGeometry} {}
 
-void TexTriangle::update() {
-  float timeValue = static_cast<float>(glfwGetTime());
-  m_greenValue = (std::sin(timeValue) / 2.0f) + 0.5f;
-}
+void TexTriangle::update() { m_greenValue = 1.0F; }
 
 void TexTriangle::render() const {
   auto renderSetup = [&]() {
-    Shader::setVec4f(COLOR_LOCATION, 0, m_greenValue, 0, 1.f);
+    Shader::setVec4f(COLOR_LOCATION, 0, m_greenValue, 0, 1.0F);
     bindGeometry(m_vao);
   };
 
@@ -30,10 +27,12 @@ void TexTriangle::render() const {
 }
 
 GLuint TexTriangle::initGeometry(const float* vertices) {
-  return createVAO(vertices, 9);
+  return createVAO(vertices, 3 * 3);
 }
 
-const Renderable& TexTriangle::getRenderable() const {
+bool TexTriangle::isReady() { return getRenderable().isReady(); }
+
+const Renderable& TexTriangle::getRenderable() {
   std::filesystem::path vShaderPath("./src/models/triangle/triangle.vert");
   std::filesystem::path fShaderPath("./src/models/triangle/triangle.frag");
 
