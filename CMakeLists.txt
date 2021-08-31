@@ -29,6 +29,7 @@ add_executable(rot8
     include/rot8/renderable.h
     include/rot8/helpers/shader.h
     include/rot8/helpers/vao.h
+    include/rot8/models/tex_triangle.h
     include/rot8/models/triangle.h
     include/rot8/window.h
 
@@ -36,6 +37,7 @@ add_executable(rot8
     src/renderable.cpp
     src/helpers/shader.cpp
     src/helpers/vao.cpp
+    src/models/tex_triangle/tex_triangle.cpp
     src/models/triangle/triangle.cpp
     src/window.cpp
     src/main.cpp
