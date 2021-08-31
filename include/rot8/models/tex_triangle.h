@@ -1,25 +1,31 @@
 
 #pragma once
 
+#include <rot8/helpers/texture.h>>
 #include <rot8/renderable.h>
 
 #include <memory>
 
+const static size_t TRIANGLE_VERTEX_COUNT{3};
 class TexTriangle {
  public:
-  TexTriangle(GLuint triangleGeometry);
+  TexTriangle(GLuint vertexArray);
 
   void update();
 
   void render() const;
 
-  static GLuint initGeometry(const float* vertices);
+  static GLuint initGeometry(
+      std::array<float, TRIANGLE_VERTEX_COUNT * 3>& postions,
+      std::array<float, TRIANGLE_VERTEX_COUNT * 2>& texCoords);
 
   static bool isReady();
 
   static const Renderable& getRenderable();
 
+  static const Texture& getTexture();
+
  private:
-  float m_greenValue{1.0F};
+  float m_redValue{1.0F};
   GLuint m_vao;
 };

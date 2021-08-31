@@ -8,9 +8,8 @@ class Texture {
  public:
   Texture(std::filesystem::path& texturePath);
 
+  inline void bindTexture() const { glBindTexture(GL_TEXTURE_2D, m_texture); }
+
  private:
   GLuint m_texture{0U};
-  int m_width{0};
-  int m_height{0};
-  int m_channels{0};
 };

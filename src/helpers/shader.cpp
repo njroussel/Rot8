@@ -48,7 +48,7 @@ Shader& Shader::operator=(Shader&& rhs) noexcept {
   return *this;
 }
 
-void Shader::fromSource(const GLenum shaderType, const GLchar* shaderSource) {
+void Shader::fromSource(const GLenum& shaderType, const GLchar* shaderSource) {
   m_shader = glCreateShader(shaderType);
   glShaderSource(m_shader, 1, &shaderSource, nullptr);
   glCompileShader(m_shader);

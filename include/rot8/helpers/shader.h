@@ -24,13 +24,17 @@ class Shader {
 
   inline GLuint getId() const { return m_shader; }
 
-  inline static void setVec4f(GLuint location, GLfloat x, GLfloat y, GLfloat z,
+  inline static void setVec4f(GLint location, GLfloat x, GLfloat y, GLfloat z,
                               GLfloat w) {
     glUniform4f(location, x, y, z, w);
   }
 
+  inline static void setVec2f(GLint location, GLfloat x, GLfloat y) {
+    glUniform2f(location, x, y);
+  }
+
  private:
-  void fromSource(const GLenum shaderType, const GLchar* shaderSource);
+  void fromSource(const GLenum& shaderType, const GLchar* shaderSource);
 
   void checkCompilation();
 

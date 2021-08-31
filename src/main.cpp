@@ -5,7 +5,9 @@
 #include <rot8/window.h>
 
 #include <algorithm>
+#include <array>
 #include <iostream>
+#include <span>
 
 constexpr uint16_t WINDOW_WIDTH = 1280U;
 constexpr uint16_t WINDOW_HEIGHT = 720U;
@@ -20,12 +22,15 @@ int main() {
                                       -1.0F, -1.0F, 0.0F,  //
                                       1.0F,  -1.0F, 0.0F};
 
-  std::array<float, 3 * 3> vertices_2{-1.0F, 1.0F,  0.0F,  //
-                                      1.0F,  1.0F,  0.0F,  //
-                                      1.0F,  -1.0F, 0.0F};
+  std::array<float, 3 * 3> positions_2{-1.0F, 1.0F,  0.0F,  //
+                                       1.0F,  1.0F,  0.0F,  //
+                                       1.0F,  -1.0F, 0.0F};
+  std::array<float, 3 * 2> texCoords_2{0.0F,       0.0F,  //
+                                       1.0F / 2.F, 1.0F,  //
+                                       1.0F,       0.0F};
 
   Triangle triangle{Triangle::initGeometry(&vertices_1[0])};
-  TexTriangle textriangle{TexTriangle::initGeometry(&vertices_2[0])};
+  TexTriangle textriangle{TexTriangle::initGeometry(positions_2, texCoords_2)};
   if (!Triangle::isReady() || !TexTriangle::isReady()) {
     return EXIT_FAILURE;
   }

@@ -32,7 +32,7 @@ void Triangle::render() const {
 }
 
 GLuint Triangle::initGeometry(const float* vertices) {
-  return createVAO(vertices, 3 * 3);
+  return createVAO(3 * 3, vertices);
 }
 
 bool Triangle::isReady() { return getRenderable().isReady(); }
