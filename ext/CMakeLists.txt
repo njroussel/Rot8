@@ -37,6 +37,14 @@ set(CompilerFlags ${CompilerFlags}
     KR8MD_INCLUDE_DIR)
 
 
+## STB
+set(STB_INCLUDE_DIR
+    ${CMAKE_CURRENT_SOURCE_DIR}/stb)
+
+set(CompilerFlags ${CompilerFlags}
+    STB_INCLUDE_DIR)
+
+
 ## Rot8
 foreach(CompilerFlag ${CompilerFlags})
     set(${CompilerFlag} "${${CompilerFlag}}" PARENT_SCOPE)

@@ -52,6 +52,8 @@ target_include_directories(rot8 SYSTEM PRIVATE
     ${GLAD_INCLUDE_DIR}
     # Kr8md Vectorization (SIMD) library
     ${KR8MD_INCLUDE_DIR}
+    # STB Single file libraries
+    ${STB_INCLUDE_DIR}
     )
 
 target_link_libraries(rot8 glfw glad)
