@@ -4,7 +4,8 @@
 
 #include <iostream>
 
-Texture::Texture(std::filesystem::path& texturePath) {
+Texture::Texture(std::filesystem::path& texturePath, TextureFormat inputFormat,
+                 TextureFormat desiredFormat) {
   if (!std::filesystem::exists(texturePath)) {
     std::cerr << "ERROR::TEXTURE::PATH_DOES_NOT_EXIST\n"
               << "Following path for texture could not be found:\n"
@@ -27,7 +28,7 @@ Texture::Texture(std::filesystem::path& texturePath) {
   glGenTextures(1, &m_texture);
   glBindTexture(GL_TEXTURE_2D, m_texture);
 
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
+  glTexImage2D(GL_TEXTURE_2D, 0, desiredFormat, width, height, 0, inputFormat,
                GL_UNSIGNED_BYTE, data);
   glGenerateMipmap(GL_TEXTURE_2D);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

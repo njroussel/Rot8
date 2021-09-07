@@ -1,4 +1,3 @@
-
 #define GLFW_INCLUDE_NONE
 
 #include <GLFW/glfw3.h>
@@ -59,7 +58,7 @@ const Renderable& TexTriangle::getRenderable() {
 const Texture& TexTriangle::getTexture() {
   std::filesystem::path texturePath("./res/textures/noise.jpg");
 
-  static Texture texture{texturePath};
+  static Texture texture{texturePath, TextureFormat::RGB, TextureFormat::RGB};
 
   return texture;
 }
