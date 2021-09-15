@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 
+namespace rot8 {
 GLuint createVAO(GLsizei verticeCount, const GLfloat* vertices) {
   GLuint vao{0U};
   glGenVertexArrays(1, &vao);
@@ -64,3 +65,4 @@ GLuint createVAO(GLint positionsLocation, const std::span<GLfloat>& positions,
 
   return vao;
 }
+}  // namespace rot8

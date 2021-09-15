@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <iostream>
 
+namespace rot8 {
 constexpr float CLEAR_COLOR_R = 0.2F;
 constexpr float CLEAR_COLOR_G = 0.3F;
 constexpr float CLEAR_COLOR_B = 0.3F;
@@ -74,3 +75,5 @@ void Window::processInput(GLFWwindow *const window) {
     glfwSetWindowShouldClose(window, GLFW_TRUE);
   }
 }
+
+}  // namespace rot8

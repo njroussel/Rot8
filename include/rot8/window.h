@@ -7,7 +7,7 @@
 #include <rot8/renderable.h>
 
 #include <vector>
-
+namespace rot8 {
 class Window {
  public:
   Window(const uint16_t width, const uint16_t height);
@@ -32,3 +32,4 @@ class Window {
   bool m_successInit;
   GLFWwindow *m_window;
 };
+}  // namespace rot8

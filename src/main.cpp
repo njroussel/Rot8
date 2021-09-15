@@ -9,6 +9,8 @@
 #include <iostream>
 #include <span>
 
+using namespace rot8;
+
 constexpr uint16_t WINDOW_WIDTH = 1280U;
 constexpr uint16_t WINDOW_HEIGHT = 720U;
 

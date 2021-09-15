@@ -10,6 +10,8 @@
 #include <functional>
 #include <iostream>
 
+namespace rot8 {
+
 // fShader locations
 const GLint COLOR_LOCATION{0};
 
@@ -62,3 +64,4 @@ const Texture& TexTriangle::getTexture() {
 
   return texture;
 }
+}  // namespace rot8

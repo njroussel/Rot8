@@ -5,6 +5,7 @@
 #include <rot8/renderable.h>
 
 #include <memory>
+namespace rot8 {
 
 const static size_t TRIANGLE_VERTEX_COUNT{3};
 class TexTriangle {
@@ -29,3 +30,4 @@ class TexTriangle {
   float m_redValue{1.0F};
   GLuint m_vao;
 };
+}  // namespace rot8

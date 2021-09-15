@@ -4,6 +4,8 @@
 
 #include <filesystem>
 
+namespace rot8 {
+
 enum TextureFormat {
   RGB = GL_RGB,
   RGBA = GL_RGBA,
@@ -19,3 +21,4 @@ class Texture {
  private:
   GLuint m_texture{0U};
 };
+}  // namespace rot8

@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <functional>
 
+namespace rot8 {
 class Renderable {
  public:
   Renderable(std::filesystem::path& vShaderPath,
@@ -27,3 +28,5 @@ class Renderable {
  private:
   GLuint m_program{0};
 };
+
+}  // namespace rot8

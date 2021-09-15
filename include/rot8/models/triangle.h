@@ -4,6 +4,7 @@
 
 #include <memory>
 
+namespace rot8 {
 class Triangle {
  public:
   Triangle(GLuint triangleGeometry);
@@ -22,3 +23,4 @@ class Triangle {
   float m_greenValue{1.0F};
   GLuint m_vao;
 };
+}  // namespace rot8

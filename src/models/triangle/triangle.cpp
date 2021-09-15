@@ -10,6 +10,7 @@
 #include <functional>
 #include <iostream>
 
+namespace rot8 {
 const GLuint COLOR_LOCATION{0U};
 
 Triangle::Triangle(GLuint triangleGeometry) : m_vao{triangleGeometry} {}
@@ -45,3 +46,4 @@ const Renderable& Triangle::getRenderable() {
 
   return renderable;
 }
+}  // namespace rot8

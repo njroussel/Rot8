@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+namespace rot8 {
+
 Renderable::Renderable(std::filesystem::path& vShaderPath,
                        std::filesystem::path& fShaderPath) {
   Shader vShader{GL_VERTEX_SHADER, vShaderPath};
@@ -68,3 +70,4 @@ void Renderable::render(const std::function<void()>& renderSetup) const {
   renderSetup();
   glDrawArrays(GL_TRIANGLES, 0, 3);
 }
+}  // namespace rot8

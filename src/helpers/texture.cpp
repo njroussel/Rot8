@@ -4,6 +4,7 @@
 
 #include <iostream>
 
+namespace rot8 {
 Texture::Texture(std::filesystem::path& texturePath, TextureFormat inputFormat,
                  TextureFormat desiredFormat) {
   if (!std::filesystem::exists(texturePath)) {
@@ -40,3 +41,4 @@ Texture::Texture(std::filesystem::path& texturePath, TextureFormat inputFormat,
 
   stbi_image_free(data);
 }
+}  // namespace rot8

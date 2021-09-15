@@ -5,6 +5,8 @@
 #include <fstream>
 #include <iostream>
 
+namespace rot8 {
+
 Shader::Shader(const GLenum shaderType,
                const std::filesystem::path& shaderPath) {
   if (!std::filesystem::exists(shaderPath)) {
@@ -71,3 +73,4 @@ void Shader::checkCompilation() {
     m_shader = 0;
   }
 }
+}  // namespace rot8

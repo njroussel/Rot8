@@ -4,6 +4,8 @@
 
 #include <filesystem>
 
+namespace rot8 {
+
 class Shader {
  public:
   Shader(GLenum shaderType, const std::filesystem::path& shaderPath);
@@ -40,3 +42,5 @@ class Shader {
 
   GLuint m_shader{0};
 };
+
+}  // namespace rot8
