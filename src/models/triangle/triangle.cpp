@@ -8,10 +8,12 @@
 #include <cmath>
 #include <filesystem>
 #include <functional>
+#include <glm/glm.hpp>
 #include <iostream>
 
 namespace rot8 {
 const GLuint COLOR_LOCATION{0U};
+const GLuint MAT_LOCATION{1U};
 
 Triangle::Triangle(GLuint triangleGeometry) : m_vao{triangleGeometry} {}
 
@@ -21,11 +23,14 @@ void Triangle::update() {
   const float downscale = 2.0F;
   const float offset = 0.5F;
   m_greenValue = (std::sin(timeValue) / downscale) + offset;
+  m_angle = ((std::sin(timeValue) / downscale) + offset) * (float)M_2_PI;
 }
 
 void Triangle::render() const {
   auto renderSetup = [&]() {
-    Shader::setVec4f(COLOR_LOCATION, 0, m_greenValue, 0, 1.f);
+    Shader::setVec4f(COLOR_LOCATION, 0, m_greenValue, 0, 1.F);
+    Shader::setMat4f(MAT_LOCATION, glm::rotate(glm::mat4(1.0F), m_angle,
+                                               glm::vec3(0.0, 0.0, 1.0)));
     bindGeometry(m_vao);
   };
 

@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <array>
+#include <glm/glm.hpp>
 #include <iostream>
 #include <span>
 
@@ -19,6 +20,8 @@ int main() {
   if (!window.wasCreated()) {
     return EXIT_FAILURE;
   }
+
+  glm::vec4 vec(1.0F, 0.0F, 0.0F, 1.0F);
 
   std::array<float, 3 * 3> vertices_1{-1.0F, 1.0F,  0.0F,  //
                                       -1.0F, -1.0F, 0.0F,  //

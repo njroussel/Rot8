@@ -20,6 +20,7 @@ class Triangle {
   static const Renderable& getRenderable();
 
  private:
+  float m_angle{0.0F};
   float m_greenValue{1.0F};
   GLuint m_vao;
 };

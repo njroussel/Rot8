@@ -54,10 +54,12 @@ target_include_directories(rot8 SYSTEM PRIVATE
     ${GLFW_INCLUDE_DIR}
     # GLAD OpenGL function loader
     ${GLAD_INCLUDE_DIR}
+    # GLM OpenGL Mathematics
+    ${GLM_INCLUDE_DIR}
     # Kr8md Vectorization (SIMD) library
     ${KR8MD_INCLUDE_DIR}
     # STB Single file libraries
     ${STB_INCLUDE_DIR}
     )
 
-target_link_libraries(rot8 glfw glad)
+target_link_libraries(rot8 glfw glad glm::glm)

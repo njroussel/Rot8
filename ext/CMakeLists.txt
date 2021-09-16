@@ -29,6 +29,16 @@ add_library(glad SHARED "${CMAKE_CURRENT_SOURCE_DIR}/glad/src/glad.c")
 target_include_directories(glad PRIVATE ${GLAD_INCLUDE_DIR})
 
 
+## GLM
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/glm")
+
+set(GLM_INCLUDE_DIR
+    ${CMAKE_CURRENT_SOURCE_DIR}/glm/glm)
+
+set(CompilerFlags ${CompilerFlags}
+    GLM_INCLUDE_DIR)
+
+
 ## Kr8md
 set(KR8MD_INCLUDE_DIR
     ${CMAKE_CURRENT_SOURCE_DIR}/kr8md/include)
